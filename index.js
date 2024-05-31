@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const stripe = require("stripe")(
-  "sk_test_51PLQUL0766TmHmC2y5WbAWXAaiPLyjgaD6f77mqiradovZqSjU0CCcAOhkMjCkAh38HoiY4Wr28HsJ4tg4eVY14700dcA3HTzy"
-);
 require("dotenv").config();
+const clientKey = process.env.STRIPE_SECRECT_KEY;
+const stripe = require("stripe")(clientKey);
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -28,7 +27,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const usersCollection = client.db("BistroDb").collection('users');
     const menuCollection = client.db("BistroDb").collection('menu');
@@ -301,10 +300,10 @@ async function run() {
     })
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
